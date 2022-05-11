@@ -12,8 +12,11 @@
         <h1>
             Play Tic Tac Toe 
         </h1>
-        <button>Reset</button>
-        <div>
+        <div id="inputs">
+            <button id="play">Play</button>
+            <p>Your Turn</p>
+        </div>
+        <div id="play_field">
             <button id="1">1</button>
             <button id="2">2</button>
             <button id="3">3</button>
@@ -24,9 +27,14 @@
             <button id="8">8</button>
             <button id="9">9</button>
         </div>
-        <label for="resulttext">Your Score
-            <textarea name="resulttext" id="resulttext" cols="10" rows="3"></textarea>
-        </label>
+        <div id="scorecard">
+            <label for="resulttext_1">Your Score
+                <textarea name="resulttext_1" id="resulttext_1" cols="5" rows="2"></textarea>
+            </label>
+            <label for="resulttext_2">Opponent's Score
+                <textarea name="resulttext_2" id="resulttext_2" cols="5" rows="2"></textarea>
+            </label>
+        </div>
     </div>
 </body>
 </html>
