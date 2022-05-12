@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe Game Arena</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <div id="main_div">
@@ -13,19 +14,19 @@
             Play Tic Tac Toe 
         </h1>
         <div id="inputs">
-            <button id="play">Play</button>
-            <p>Your Turn</p>
+            <button id="play" onclick="toggle()">Play</button>
+            <p></p>
         </div>
         <div id="play_field">
-            <button id="1">1</button>
-            <button id="2">2</button>
-            <button id="3">3</button>
-            <button id="4">4</button>
-            <button id="5">5</button>
-            <button id="6">6</button>
-            <button id="7">7</button>
-            <button id="8">8</button>
-            <button id="9">9</button>
+            <button disabled id="1" onclick="mark(this.id)"></button>
+            <button id="2" onclick="mark(this.id)" disabled></button>
+            <button id="3" onclick="mark(this.id)" disabled></button>
+            <button id="4" onclick="mark(this.id)" disabled></button>
+            <button id="5" onclick="mark(this.id)" disabled></button>
+            <button id="6" onclick="mark(this.id)" disabled></button>
+            <button id="7" onclick="mark(this.id)" disabled></button>
+            <button id="8" onclick="mark(this.id)" disabled></button>
+            <button id="9" onclick="mark(this.id)" disabled></button>
         </div>
         <div id="scorecard">
             <label for="resulttext_1">Your Score
