@@ -59,12 +59,13 @@ button:hover {
 
 #main_div #scorecard {
     display: flex;
-    justify-content: center;
-    align-items: column;
+    justify-items: center;
+    align-items: center;
     column-gap: 10px;
-    height: 15vh;
+    height: 10vh;
 }
 
 #main_div #scorecard label textarea {
     resize: none;
+    text-align: center;
 }

@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe Game Arena</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
     <div id="main_div">
@@ -18,7 +17,7 @@
             <p></p>
         </div>
         <div id="play_field">
-            <button disabled id="1" onclick="mark(this.id)"></button>
+            <button id="1" onclick="mark(this.id)" disabled></button>
             <button id="2" onclick="mark(this.id)" disabled></button>
             <button id="3" onclick="mark(this.id)" disabled></button>
             <button id="4" onclick="mark(this.id)" disabled></button>
@@ -30,12 +29,13 @@
         </div>
         <div id="scorecard">
             <label for="resulttext_1">Your Score
-                <textarea name="resulttext_1" id="resulttext_1" cols="5" rows="2"></textarea>
+                <textarea name="resulttext_1" id="resulttext_1" cols="3" rows="1">0</textarea>
             </label>
             <label for="resulttext_2">Opponent's Score
-                <textarea name="resulttext_2" id="resulttext_2" cols="5" rows="2"></textarea>
+                <textarea name="resulttext_2" id="resulttext_2" cols="3" rows="1">0</textarea>
             </label>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
