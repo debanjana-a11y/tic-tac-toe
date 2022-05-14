@@ -18,14 +18,12 @@ function enablePlayGround() {
 
 function toggle() {
     let text = document.getElementById("play").innerText;
-    if (text == "Play") {
+    if (text == "Start") {
         enablePlayGround()
-        document.getElementById("inputs").getElementsByTagName("p")[0].innerText = "Your Turn"
         document.getElementById("play").innerText = "Reset"
     } else {
         clearPlayGround()
-        document.getElementById("inputs").getElementsByTagName("p")[0].innerText = ""
-        document.getElementById("play").innerText = "Play"
+        document.getElementById("play").innerText = "Start"
     }
 }
 
@@ -35,7 +33,6 @@ const mark = button_id => {
         if (check_win('X') == true) {
             return
         }
-        document.getElementById("inputs").getElementsByTagName("p")[0].innerText = "Opponent's Turn"
         opponent_mark()
     } 
 }
@@ -50,7 +47,6 @@ function opponent_mark() {
     if (check_win('O') == true) {
         return
     }
-    document.getElementById("inputs").getElementsByTagName("p")[0].innerText = "Your Turn"
 }
 
 function check_win(symbol) {

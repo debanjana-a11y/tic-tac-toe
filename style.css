@@ -41,10 +41,10 @@ button:hover {
 
 
 #main_div #play_field {
-    /* border: 2px solid green; */
+    /* border: 2px solid blueviolet; */
     display: grid;
-    grid-template-columns: auto auto auto;
-    /* margin: vh; */
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     left: 5em;
     right: 5em;
     height: 40vh;
