@@ -39,8 +39,14 @@ const mark = button_id => {
 
 function opponent_mark() {
     let button_id = Math.floor(Math.random()*9 + 1)
-    while (document.getElementById(button_id).innerText != "") {
+    let count = 9;
+    while (document.getElementById(button_id).innerText != "" && count > 0) {
         button_id = Math.floor(Math.random()*9 + 1)
+        count--;
+    }
+    if (count == 0) {
+        alert ("Game Over!!")
+        return
     }
     // console.log(button_id)
     document.getElementById(button_id).innerText = 'O'
