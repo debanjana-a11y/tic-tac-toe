@@ -39,7 +39,7 @@ const mark = button_id => {
 
 function opponent_mark() {
     let button_id = Math.floor(Math.random()*9 + 1)
-    let count = 9;
+    let count = 20;
     while (document.getElementById(button_id).innerText != "" && count > 0) {
         button_id = Math.floor(Math.random()*9 + 1)
         count--;
