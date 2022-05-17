@@ -59,13 +59,12 @@ button:hover {
 }
 
 #main_div #scorecard {
-    border: 2px solid blueviolet;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     column-gap: 10px;
     height: 10%;
-    width: 70%;
+    width: 80%;
     text-align: center;
 }
 
@@ -95,4 +94,6 @@ button:hover {
 #main_div #scorecard label textarea {
     resize: none;
     text-align: center;
+    font-size: larger;
+    border: none;
 }
