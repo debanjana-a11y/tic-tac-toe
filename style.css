@@ -1,5 +1,4 @@
 * {
-    /* border: 2px solid red; */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -70,28 +69,41 @@ main {
 }
 
 .turn_info {
-    display: none;
+    font-size: 1.2rem;
 }
 
 .game_arena div {
-    margin: 2em;
+    margin: 1em;
+}
+
+td {
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    font-size: 2em;
+    color: red;
 }
 
 .board {
     height: 280px;
     width: 280px;
     background-color: pink;
+    cursor: pointer;
+}
+
+.game_arena {
     display: none;
 }
 
 .box {
+    size: 2px;
     border-collapse: collapse;
     border: none;
     border-style: outset;
 }
 
 .result {
-    display: none;
+
 }
 
 footer {
