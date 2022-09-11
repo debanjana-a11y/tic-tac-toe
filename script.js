@@ -70,7 +70,7 @@ const gameBoard = (() => {
                 
                 if (turn === 9) {
                     displayResult("It's a Tie. Wanna replay?");
-                    // stopGame();
+                    stopGame();
                 } else {
                     displayResult('Game Ongoing ...');
                 }
@@ -90,6 +90,7 @@ const gameBoard = (() => {
         for(const box of boxlist) {
             box.textContent = '';
             box.style.backgroundColor = 'pink';
+            box.style.pointerEvents = 'auto';
         };
         board.splice(0, board.length);
         changePlayer(player_1);
@@ -98,14 +99,15 @@ const gameBoard = (() => {
     };
 
     // To avoid further clicks
-    // function stopGame() {
-    //     const boxlist = document.getElementsByClassName('box');
-    //     for(const box of boxlist) {
-    //         // box.style.pointerEvents = 'none';
-    //     };
-    // }
+    function stopGame() {
+        const boxlist = document.getElementsByClassName('box');
+        for(const box of boxlist) {
+            console.log(box.style.pointerEvents);
+            box.style.pointerEvents = 'none';
+        }
+    }
 
-    return {resetGame};
+    return {resetGame, stopGame};
 })();
 
 const displayController = (() => {
@@ -133,9 +135,6 @@ const displayController = (() => {
             combo.map((e) => {
                 document.getElementById(e).style.backgroundColor = 'hsl(0, 100%, 80%)';
             });
-
-            // STOP the game
-            // gameBoard.stopGame();
         }
     };
 
