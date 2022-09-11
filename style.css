@@ -6,13 +6,18 @@
     font-weight: bold;
 }
 
+:root {
+    --pink :pink;
+    --dark-pink: rgb(249, 174, 186);
+}
+
 html, body {
     height: 100%;
     width: 100%;
 }
 
 body {
-    background-image: linear-gradient(to top, white, pink);
+    background-image: linear-gradient(to top, white, var(--pink));
 }
 
 header {
@@ -86,7 +91,7 @@ td {
 .board {
     height: 280px;
     width: 280px;
-    background-color: pink;
+    background-color: var(--pink);
     cursor: pointer;
 }
 
@@ -109,7 +114,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: hsl(0, 40%, 80%);
+    background-color: var(--dark-pink);
     height: 5%;
 }
 
