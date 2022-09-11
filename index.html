@@ -5,36 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe Game Arena</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide|Sofia|Trirong">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
 </head>
 <body>
-    <div id="main_div">
+    <header>
         <h1>
-            Play Tic Tac Toe 
+            Tic Tac Toe 
         </h1>
-        <div id="inputs">
-            <button id="play" onclick="toggle()">Start</button>
+    </header>
+    <main>
+        <div class="buttons">
+            <button class="btn btn_play">
+                <div>Play</div>
+                <i class="fa fa-play"></i>
+            </button>
+            <button class="btn btn_replay">
+                <div>Replay</div>
+                <i class="fa fa-rotate-right"></i>
+            </button>
         </div>
-        <div id="play_field">
-            <button id="1" onclick="mark(this.id)" disabled></button>
-            <button id="2" onclick="mark(this.id)" disabled></button>
-            <button id="3" onclick="mark(this.id)" disabled></button>
-            <button id="4" onclick="mark(this.id)" disabled></button>
-            <button id="5" onclick="mark(this.id)" disabled></button>
-            <button id="6" onclick="mark(this.id)" disabled></button>
-            <button id="7" onclick="mark(this.id)" disabled></button>
-            <button id="8" onclick="mark(this.id)" disabled></button>
-            <button id="9" onclick="mark(this.id)" disabled></button>
+        <div class="game_arena">
+            <div class="turn_info">Turn for Player : </div>
+            <table class="board">
+                <tr>
+                    <td class= "box" id="0"></td>
+                    <td class= "box" id="1"></td>
+                    <td class= "box" id="2"></td>
+                </tr>
+                <tr>
+                    <td class= "box" id="3"></td>
+                    <td class= "box" id="4"></td>
+                    <td class= "box" id="5"></td>
+                </tr>
+                <tr>
+                    <td class= "box" id="6"></td>
+                    <td class= "box" id="7"></td>
+                    <td class= "box" id="8"></td>
+                </tr>
+            </table>
+            <div class="result"></div>
         </div>
-        <div id="scorecard">
-            <label for="resulttext_1" id="label_1">Your Score
-                <textarea name="resulttext_1" id="resulttext_1" cols="3" rows="1">0</textarea>
-            </label>
-            <label for="resulttext_2" id="label_2">Opponent's Score
-                <textarea name="resulttext_2" id="resulttext_2" cols="3" rows="1">0</textarea>
-            </label>
-        </div>
-    </div>
+    </main>
+    <footer> 
+        <a href="https://github.com/debanjana-a11y/tic-tac-toe" target="_blank">code link</a>
+        <i class="fa fa-github" style="font-size:24px"></i>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

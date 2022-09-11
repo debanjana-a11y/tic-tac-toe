@@ -1,99 +1,135 @@
 * {
-    /* border: 2px solid red; */
-    box-shadow: 0 2px 10px pink;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Trirong';
     font-weight: bold;
 }
 
-body {
-    background-image: linear-gradient(to top, pink, white);
-    display: flex;
-    justify-content: center;
-    margin: 0;
-}
-#main_div {
-    background-color: white;
-    margin: 5vh;
-    padding: 0 5vh;
-    height: 40rem;
-    width: 20rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    row-gap: 2vh;
-    align-items: center;
-}
-
-button:hover {
-    cursor: pointer;
-}
-
-#main_div #inputs {
-    /* border: 2px solid blue; */
-    height: auto;
-    width: 50%;
-    font-size: larger;
-}
-
-#main_div #inputs button {
-    border: none;
-    background-color: transparent;
-    font-size: larger;
+html, body {
+    height: 100%;
     width: 100%;
 }
 
-
-#main_div #play_field {
-    /* border: 2px solid blueviolet; */
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    left: 5em;
-    right: 5em;
-    height: 40vh;
-    width: 40vh;
+body {
+    background-image: linear-gradient(to top, white, pink);
 }
 
-#main_div #play_field > button {
-    background-color: transparent;
-    font-size: larger;
-}
-
-#main_div #scorecard {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    column-gap: 10px;
+header {
     height: 10%;
-    width: 80%;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#main_div #scorecard > label {
-    height: 200%;
-    grid-row: 1/3;
-    display: grid;
+main {
+    height: 85%;
+    padding: 1.5rem;
 }
 
-#main_div #scorecard #label_1 {
-    grid-column: 1/3;
-    
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 10px;
+    flex-wrap: wrap;
 }
 
-#main_div #scorecard #label_2 {
-    grid-column: 3/5;
+.buttons * {
+    font-size: large;
 }
 
-#main_div #scorecard #resulttext_1 {
-    grid-column: 1/3;
-}
-
-#main_div #scorecard #resulttext_2 {
-    grid-column: 1/3;
-}
-
-#main_div #scorecard label textarea {
-    resize: none;
-    text-align: center;
-    font-size: larger;
+.btn {
+    height: 50px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
     border: none;
+    cursor: pointer;
+    color: hsla(255,100%,0%, 0.5);
+}
+
+.btn:hover {
+    color: hsla(255,100%,0%, 0.8);
+}
+
+.btn_replay {
+    display: none;
+}
+
+.game_arena {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+
+.turn_info {
+    font-size: 1.2rem;
+}
+
+.game_arena div {
+    margin: 1em;
+}
+
+td {
+    height: 60px;
+    width: 60px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.board {
+    height: 280px;
+    width: 280px;
+    background-color: pink;
+    cursor: pointer;
+}
+
+.game_arena {
+    display: none;
+}
+
+.box {
+    size: 2px;
+    border-collapse: collapse;
+    border: none;
+    border-style: outset;
+}
+
+.result {
+    font-size: 20px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(0, 40%, 80%);
+    height: 5%;
+}
+
+@media only screen and (max-width: 350px) {
+    [class*="board"] {
+        width: 100%;
+    }
+    .board {
+        width: 180px;
+        height: auto;
+    }
+    .turn_info {
+        font-size: 1rem;
+        margin: 0;
+    }
+    .result {
+        font-size: 1rem;
+        margin: 0;
+    }
+    .game_arena {
+        padding: 1rem;
+    }
 }

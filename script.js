@@ -1,83 +1,147 @@
-let game_started = false
-let your_score = opponent_score = 0
-
-function clearPlayGround() {
-    let buttons = document.getElementById("play_field").getElementsByTagName("button")
-    for (var i = 0 ; i < buttons.length; i++) {
-        buttons[i].innerText = ""
-        buttons[i].disabled = true
+const gameBoard = (() => {
+    let board = [];
+    let winboard = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+                    [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+    
+    function player(number, name) {
+        this.number = number;
+        this.name = name;
+        return {number, name};
     }
-}
 
-function enablePlayGround() {
-    let buttons = document.getElementById("play_field").getElementsByTagName("button")
-    for (var i = 0 ; i < buttons.length; i++) {
-        buttons[i].disabled = false
-    }
-}
+    const player_1 = player(1, 'X');
+    const player_2 = player(2, 'O');
 
-function toggle() {
-    let text = document.getElementById("play").innerText;
-    if (text == "Start") {
-        enablePlayGround()
-        document.getElementById("play").innerText = "Reset"
-    } else {
-        clearPlayGround()
-        document.getElementById("play").innerText = "Start"
-    }
-}
+    let playing_now = null;
 
-const mark = button_id => {
-    if (document.getElementById(button_id).innerText == "") {
-        document.getElementById(button_id).innerText = 'X'
-        if (check_win('X') == true) {
-            return
+    function changePlayer(player) {
+        const turn_info = document.getElementsByClassName('turn_info')[0];
+        const element = document.createElement('span');
+        if (playing_now !== null) {
+            turn_info.removeChild(turn_info.lastChild);
         }
-        opponent_mark()
-    } 
-}
+        
+        playing_now = player;
+        element.textContent = playing_now.number;
+        turn_info.append(element);
+    }
 
-function opponent_mark() {
-    let button_id = Math.floor(Math.random()*9 + 1)
-    let count = 20;
-    while (document.getElementById(button_id).innerText != "" && count > 0) {
-        button_id = Math.floor(Math.random()*9 + 1)
-        count--;
-    }
-    if (count == 0) {
-        alert ("Game Over!!")
-        return
-    }
-    // console.log(button_id)
-    document.getElementById(button_id).innerText = 'O'
-    if (check_win('O') == true) {
-        return
-    }
-}
+    const checkWinner = () => {
+        let player_1_choice = board.reduce((a, e, i) =>
+        (e === 'X')? a.concat(i) : a, []);
 
-function check_win(symbol) {
-    let buttons = document.getElementById("play_field").getElementsByTagName("button")
-    if (((buttons[0].innerText == symbol) && (buttons[1].innerText == symbol) && (buttons[2].innerText == symbol)) ||
-        ((buttons[3].innerText == symbol) && (buttons[4].innerText == symbol) && (buttons[5].innerText == symbol)) ||
-        ((buttons[6].innerText == symbol) && (buttons[7].innerText == symbol) && (buttons[8].innerText == symbol)) ||
-        ((buttons[0].innerText == symbol) && (buttons[3].innerText == symbol) && (buttons[6].innerText == symbol)) ||
-        ((buttons[1].innerText == symbol) && (buttons[4].innerText == symbol) && (buttons[7].innerText == symbol)) ||
-        ((buttons[2].innerText == symbol) && (buttons[5].innerText == symbol) && (buttons[8].innerText == symbol)) ||
-        ((buttons[0].innerText == symbol) && (buttons[4].innerText == symbol) && (buttons[8].innerText == symbol)) ||
-        ((buttons[2].innerText == symbol) && (buttons[4].innerText == symbol) && (buttons[6].innerText == symbol))) {
-            // Increament Score
-            if (symbol == "X") {
-                your_score++;
-                document.getElementById("resulttext_1").innerText = your_score;
-            } else {
-                opponent_score++;
-                document.getElementById("resulttext_2").innerText = opponent_score;
+        let player_2_choice = board.reduce((a, e, i) =>
+        (e === 'O')? a.concat(i) : a, []);
+        
+        let winner = undefined;
+        for (let combo of winboard) {
+            // Both includes and indexOf works
+            if (combo.every(e => player_1_choice.includes(e)) === true) {
+                winner = player_1;
+                return {winner, combo};
             }
-            toggle()
-            return true;
+            if (combo.every(e => player_2_choice.indexOf(e) > -1) === true) {
+                winner = player_2;
+                return {winner, combo};
+            }
         }
-    return false;
-}
+        return winner;
+    }
+
+    let turn = 0;
+    const addListener = (() => {
+        const boxlist = document.getElementsByClassName('box');
+        for(const box of boxlist) {
+            box.addEventListener('click', (e) => {
+                turn++;
+                let idx = e.currentTarget.id;
+                if (playing_now.number == 1 && e.currentTarget.textContent === '') {
+                    e.currentTarget.textContent = 'X';
+                    e.currentTarget.style.color = 'red';
+                    board[idx] = 'X';
+                    changePlayer(player_2);
+                }
+                if (playing_now.number == 2 && e.currentTarget.textContent === '') {
+                    e.currentTarget.textContent = 'O';
+                    e.currentTarget.style.color = 'green';
+                    board[idx] = 'O';
+                    changePlayer(player_1);
+                }
+                
+                if (turn === 9) {
+                    displayResult("It's a Tie. Wanna replay?");
+                    stopGame();
+                } else {
+                    displayResult('Game Ongoing ...');
+                }
+                
+                const ret = checkWinner();
+                if (ret !== undefined) {
+                    if (ret.winner !== undefined) {
+                        displayResult('Player ' + ret.winner.number + " is WINNER", ret.combo);
+                    }
+                }
+            });
+        };
+    })();
+
+    const resetGame = () => {
+        const boxlist = document.getElementsByClassName('box');
+        for(const box of boxlist) {
+            box.textContent = '';
+            box.style.backgroundColor = 'pink';
+            box.style.pointerEvents = 'auto';
+        };
+        board.splice(0, board.length);
+        changePlayer(player_1);
+        turn = 0;
+        displayResult('Starting Game...');
+    };
+
+    // To avoid further clicks
+    function stopGame() {
+        const boxlist = document.getElementsByClassName('box');
+        for(const box of boxlist) {
+            console.log(box.style.pointerEvents);
+            box.style.pointerEvents = 'none';
+        }
+    }
+
+    return {resetGame, stopGame};
+})();
+
+const displayController = (() => {
+    const addListener = (() => {
+        let play_btn = document.getElementsByClassName('btn_play')[0];
+        play_btn.addEventListener("click", (e) => {
+            const game_arena = document.getElementsByClassName('game_arena')[0];
+            game_arena.style.display = 'flex';
+
+            const btn_replay = document.getElementsByClassName('btn_replay')[0];
+            btn_replay.style.display = 'flex';
+            e.currentTarget.style.display = 'none';
+        });
+
+        const btn_replay = document.getElementsByClassName('btn_replay')[0];
+        btn_replay.addEventListener("click", (e) => {
+            gameBoard.resetGame();
+        });
+    })();
+
+    displayResult = (text, combo = []) => {
+        const result = document.getElementsByClassName('result')[0];
+        result.innerText = text;
+        if (combo != undefined) {
+            combo.map((e) => {
+                document.getElementById(e).style.backgroundColor = 'hsl(0, 100%, 80%)';
+            });
+        }
+    };
+
+    gameBoard.resetGame();
+
+    return {displayResult};
+})();
 
 
 
