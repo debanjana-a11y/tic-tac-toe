@@ -11,25 +11,18 @@ const gameBoard = (() => {
     const player_1 = player(1, 'X');
     const player_2 = player(2, 'O');
 
-    let playing_now = undefined;
-
-    changePlayer(player_1);
+    let playing_now = null;
 
     function changePlayer(player) {
         const turn_info = document.getElementsByClassName('turn_info')[0];
         const element = document.createElement('span');
-        if (playing_now !== undefined) {
+        if (playing_now !== null) {
             turn_info.removeChild(turn_info.lastChild);
         }
         
         playing_now = player;
         element.textContent = playing_now.number;
         turn_info.append(element);
-    }
-
-    function changeResult(text) {
-        const result = document.getElementsByClassName('result')[0];
-        result.innerText = text;
     }
 
     function checkWinner() {
@@ -74,40 +67,47 @@ const gameBoard = (() => {
         return null;
     }
 
-    changeResult('Game Starting ...');
-
-    (function addListener() {
+    const addListener = (() => {
         const boxlist = document.getElementsByClassName('box');
         for(const box of boxlist) {
             box.addEventListener('click', (e) => {
                 let idx = e.currentTarget.id;
-                if (playing_now.number == 1) {
+                if (playing_now.number == 1 && e.currentTarget.textContent === '') {
                     e.currentTarget.textContent = 'X';
+                    e.currentTarget.style.color = 'red';
                     board[idx] = 'X';
                     changePlayer(player_2);
-                } else {
+                }
+                if (playing_now.number == 2 && e.currentTarget.textContent === '') {
                     e.currentTarget.textContent = 'O';
                     e.currentTarget.style.color = 'green';
                     board[idx] = 'O';
                     changePlayer(player_1);
                 }
-                changeResult('Game Ongoing ...');
+                displayResult('Game Ongoing ...');
                 const winner = checkWinner();
                 if (winner !== null) {
-                    changeResult('Our winner is ' + winner.number);
+                    displayResult('Player ' + winner.number + " is WINNER");
                 }
             });
         };
     })();
 
-    function emptyBoard() {
-        board.clear();
+    const resetGame = () => {
+        const boxlist = document.getElementsByClassName('box');
+        for(const box of boxlist) {
+            box.textContent = '';
+        };
+        board.splice(0, board.length);
+        changePlayer(player_1);
+        displayResult('Game Starting ...');
     }
 
+    return {resetGame};
 })();
 
 const displayController = (() => {
-    (function addListener() {
+    const addListener = (() => {
         let play_btn = document.getElementsByClassName('btn_play')[0];
         play_btn.addEventListener("click", (e) => {
             const game_arena = document.getElementsByClassName('game_arena')[0];
@@ -118,15 +118,20 @@ const displayController = (() => {
             e.currentTarget.style.display = 'none';
         });
 
-
         const btn_replay = document.getElementsByClassName('btn_replay')[0];
         btn_replay.addEventListener("click", (e) => {
-            const boxlist = document.getElementsByClassName('box');
-            for(const box of boxlist) {
-               box.textContent = '';
-            };
+            gameBoard.resetGame();
         });
     })();
+
+    displayResult = (text) => {
+        const result = document.getElementsByClassName('result')[0];
+        result.innerText = text;
+    };
+
+    gameBoard.resetGame();
+
+    return {displayResult};
 })();
 
 

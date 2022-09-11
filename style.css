@@ -81,7 +81,6 @@ td {
     width: 60px;
     text-align: center;
     font-size: 2em;
-    color: red;
 }
 
 .board {
@@ -103,7 +102,7 @@ td {
 }
 
 .result {
-
+    font-size: x-large;
 }
 
 footer {
