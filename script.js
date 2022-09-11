@@ -1,6 +1,7 @@
 const gameBoard = (() => {
-    let board = ['', '', '', '', '', '', '', '', ''];
-    let winboard = ['012', '345', '678', '036', '147', '258', '048', '246'];
+    let board = [];
+    let winboard = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+                    [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
     
     function player(number, name) {
         this.number = number;
@@ -25,52 +26,34 @@ const gameBoard = (() => {
         turn_info.append(element);
     }
 
-    function checkWinner() {
-        let player_1_choice = "";
-        let player_2_choice = "";
-        for(let idx in board) {
-            if (board[idx] == 'X') {
-                player_1_choice = player_1_choice + idx;
-            }
-            if (board[idx] == 'O') {
-                player_2_choice = player_2_choice + idx;
-            }
-        }
+    const checkWinner = () => {
+        let player_1_choice = board.reduce((a, e, i) =>
+        (e === 'X')? a.concat(i) : a, []);
+
+        let player_2_choice = board.reduce((a, e, i) =>
+        (e === 'O')? a.concat(i) : a, []);
         
-        for (let e of winboard) {
-            let player_1_win = 0;
-            let player_2_win = 0;
-      
-            for(let i = 0; i < e.length; i++) {
-                let ch = e.charAt(i);
-                if (playing_now === player_2) {
-                    if (player_1_choice.includes(ch) === true) {
-                        player_1_win++;
-                        if (player_1_win === 3) {
-                            return player_1;
-                        }
-                    } else {
-                        break;
-                    }
-                } else {
-                    if (player_2_choice.includes(ch) === true) {
-                        player_2_win++;
-                        if (player_2_win === 3) {
-                            return player_2;
-                        }
-                    } else {
-                        break;
-                    }
-                }
+        let winner = undefined;
+        for (let combo of winboard) {
+            // Both includes and indexOf works
+            if (combo.every(e => player_1_choice.includes(e)) === true) {
+                winner = player_1;
+                return {winner, combo};
+            }
+            if (combo.every(e => player_2_choice.indexOf(e) > -1) === true) {
+                winner = player_2;
+                return {winner, combo};
             }
         }
-        return null;
+        return winner;
     }
 
+    let turn = 0;
     const addListener = (() => {
         const boxlist = document.getElementsByClassName('box');
         for(const box of boxlist) {
             box.addEventListener('click', (e) => {
+                turn++;
                 let idx = e.currentTarget.id;
                 if (playing_now.number == 1 && e.currentTarget.textContent === '') {
                     e.currentTarget.textContent = 'X';
@@ -84,10 +67,19 @@ const gameBoard = (() => {
                     board[idx] = 'O';
                     changePlayer(player_1);
                 }
-                displayResult('Game Ongoing ...');
-                const winner = checkWinner();
-                if (winner !== null) {
-                    displayResult('Player ' + winner.number + " is WINNER");
+                
+                if (turn === 9) {
+                    displayResult("It's a Tie. Wanna replay?");
+                    // stopGame();
+                } else {
+                    displayResult('Game Ongoing ...');
+                }
+                
+                const ret = checkWinner();
+                if (ret !== undefined) {
+                    if (ret.winner !== undefined) {
+                        displayResult('Player ' + ret.winner.number + " is WINNER", ret.combo);
+                    }
                 }
             });
         };
@@ -97,11 +89,21 @@ const gameBoard = (() => {
         const boxlist = document.getElementsByClassName('box');
         for(const box of boxlist) {
             box.textContent = '';
+            box.style.backgroundColor = 'pink';
         };
         board.splice(0, board.length);
         changePlayer(player_1);
-        displayResult('Game Starting ...');
-    }
+        turn = 0;
+        displayResult('Starting Game...');
+    };
+
+    // To avoid further clicks
+    // function stopGame() {
+    //     const boxlist = document.getElementsByClassName('box');
+    //     for(const box of boxlist) {
+    //         // box.style.pointerEvents = 'none';
+    //     };
+    // }
 
     return {resetGame};
 })();
@@ -124,9 +126,17 @@ const displayController = (() => {
         });
     })();
 
-    displayResult = (text) => {
+    displayResult = (text, combo = []) => {
         const result = document.getElementsByClassName('result')[0];
         result.innerText = text;
+        if (combo != undefined) {
+            combo.map((e) => {
+                document.getElementById(e).style.backgroundColor = 'hsl(0, 100%, 80%)';
+            });
+
+            // STOP the game
+            // gameBoard.stopGame();
+        }
     };
 
     gameBoard.resetGame();
